@@ -1,9 +1,11 @@
 {
-  "name": "paylark-scaffold",
+  "name": "olibilo-scaffold",
   "version": "1.5.0",
   "private": true,
   "scripts": {
+    "predev": "cp ../assets/olibilo-google-play-512.png public/",
     "dev": "next dev",
+    "prebuild": "cp ../assets/olibilo-google-play-512.png public/",
     "build": "next build",
     "start": "next start",
     "lint": "eslint",

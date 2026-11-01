@@ -8,7 +8,7 @@ export default function AuthBrand() {
   return (
     <div className="mb-8 flex flex-col items-center gap-3">
       <Image
-        src="/paylark-logo.png"
+        src="/olibilo-google-play-512.png"
         alt={BRAND.name}
         width={96}
         height={96}

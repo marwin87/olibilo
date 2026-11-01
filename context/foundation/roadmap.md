@@ -1,5 +1,5 @@
 ---
-project: paylark
+project: olibilo
 version: 1
 status: active
 created: 2026-06-11
@@ -9,14 +9,14 @@ main_goal: low-complexity
 top_blocker: none
 ---
 
-# Roadmap: PayLark
+# Roadmap: Olibilo
 
 > Derived from `context/foundation/prd.md`. Edit-in-place. Full per-change history (decisions, pitfalls) lives in `context/archive/history.md`.
 > `/10x-archive` closes items by exact `Change ID` (flips Status in the table below and appends to `## Done`).
 
 ## Vision recap
 
-PayLark replaces the household spreadsheet with a self-hostable web app: recurring payment instances are generated automatically, the dashboard shows what is upcoming, overdue and paid, and each family member has an isolated account. No subscription, no third-party data sharing.
+Olibilo replaces the household spreadsheet with a self-hostable web app: recurring payment instances are generated automatically, the dashboard shows what is upcoming, overdue and paid, and each family member has an isolated account. No subscription, no third-party data sharing.
 
 ## At a glance
 

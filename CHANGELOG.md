@@ -6,7 +6,7 @@ Notable changes, release by release.
 
 ### Features
 
-- Rebranded to PayLark, with a new logo and green theme color
+- Rebranded to Olibilo, with a new logo and green theme color
 - Sort payments paid or unpaid first across all categories
 - Jump a year at a time on desktop in the month picker
 
@@ -111,7 +111,7 @@ Notable changes, release by release.
 
 ### License
 
-- PayLark is no longer MIT-licensed; commercial use now requires permission. See [LICENSE](LICENSE)
+- Olibilo is no longer MIT-licensed; commercial use now requires permission. See [LICENSE](LICENSE)
 
 ### Features
 
