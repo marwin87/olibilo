@@ -365,3 +365,53 @@ html.theme-vesperfall { --nav-accent: var(--color-green-300); }
   transition: background-color 600000s 0s, color 600000s 0s;
 }
 .theme-vesperfall { color-scheme: dark; }
+
+/* Wordmark: coin "O" + colored dots over the "i"s (green = paid, blue = due). */
+.brand-coin {
+  display: inline-grid;
+  place-items: center;
+  width: 1.05em;
+  height: 1.05em;
+  margin-right: 0.04em;
+  border: 0.09em solid #079447;
+  border-radius: 9999px;
+  font-size: 0.95em;
+  line-height: 1;
+}
+.brand-dot {
+  position: relative;
+  display: inline-block;
+}
+.brand-dot::after {
+  content: "";
+  position: absolute;
+  top: 0.1em;
+  left: 50%;
+  width: 0.15em;
+  height: 0.15em;
+  border-radius: 9999px;
+  transform: translateX(-50%);
+  background: #079447;
+}
+.brand-dot-1::after {
+  background: #3b82f6;
+}
+.dark .brand-coin {
+  border-color: #10b981;
+}
+.dark .brand-dot-0::after {
+  background: #10b981;
+}
+.dark .brand-dot-1::after {
+  background: #60a5fa;
+}
+.theme-vesperfall .brand-coin {
+  border-color: #c29a3f;
+  background: radial-gradient(circle at 35% 30%, rgba(227, 203, 133, 0.2), transparent 70%);
+}
+.theme-vesperfall .brand-dot::after {
+  top: -0.02em;
+}
+.theme-vesperfall .brand-dot-0::after {
+  background: #e3cb85;
+}
