@@ -24,7 +24,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: BRAND.name,
+  title: `${BRAND.name}: Personal payment tracker`,
   description: "Household bill tracking made simple",
 };
 

@@ -1,4 +1,4 @@
-# <img src="assets/olibilo-icon-1024.png" width="32" alt="Olibilo logo" valign="middle"> Olibilo
+# <img src="assets/olibilo-icon-1024.png" width="32" alt="Olibilo logo" valign="middle"> Olibilo: Personal payment tracker
 
 A self-hosted household bill tracking PWA. Define your recurring bills once, then each month's payment instances are generated automatically. Mark bills paid from any device — phone, tablet, or desktop.
 
