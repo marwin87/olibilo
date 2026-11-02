@@ -240,6 +240,7 @@ export default function BillTemplateRow({
               due_days: template.due_days,
               dates: template.dates,
               due_month: template.due_month,
+              start_period: template.start_period,
               end_period: template.end_period,
               notes: template.notes,
             }}

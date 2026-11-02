@@ -373,3 +373,17 @@ def test_end_period_cut_does_not_trigger_restore_prompt(client):
     )
     r = client.get(f"/bills/{bill_id}/has-deleted-future", headers=auth(token))
     assert r.json() == {"has_deleted_future": False}
+
+
+@pytest.mark.parametrize("frequency", ["monthly", "annual"])
+def test_create_uses_explicit_start_period_year(client, frequency):
+    """start_period carries the year; due_month alone would pick the current/next one."""
+    tok = register_and_login(client, f"start_year_{frequency}@test.com")
+    year = today_utc().year + 2
+    r = client.post(
+        "/bills",
+        json=_bill(client, tok, frequency=frequency, start_period=f"{year}-01"),
+        headers=auth(tok),
+    )
+    assert r.status_code == 201
+    assert r.json()["start_period"] == f"{year}-01"

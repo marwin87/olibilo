@@ -47,6 +47,9 @@ class BillTemplateCreate(BaseModel):
     currency: Currency = "PLN"
     due_day: int | None = Field(None, ge=1, le=31)
     due_month: int | None = Field(None, ge=1, le=12)  # month for annual/one_off
+    start_period: str | None = Field(
+        None, pattern=_PERIOD_RE
+    )  # monthly/annual: first month
     end_period: str | None = Field(None, pattern=_PERIOD_RE)  # last recurring month
     notes: Notes | None = None
     due_days: DueDays | None = None  # several days per cycle; due_day mirrors the first
@@ -78,6 +81,9 @@ class BillTemplateUpdate(BaseModel):
     currency: Currency | None = None
     due_day: int | None = Field(None, ge=1, le=31)
     due_month: int | None = Field(None, ge=1, le=12)  # month for annual/one_off
+    start_period: str | None = Field(
+        None, pattern=_PERIOD_RE
+    )  # monthly/annual: first month
     end_period: str | None = Field(None, pattern=_PERIOD_RE)  # null clears the end
     notes: Notes | None = None
     recreate_deleted_future: bool = False  # transient control flag — not persisted

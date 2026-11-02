@@ -84,8 +84,8 @@ export default function BillTemplateForm({ initial, startPeriod, isDraft, paidDa
     initial?.due_days ?? (initial?.due_day != null ? [initial.due_day] : [todayDay]),
   );
   const [dates, setDates] = useState<string[]>(initial?.dates?.length ? initial.dates : [todayStr]);
-  const [dueMonth, setDueMonth] = useState(
-    initial?.due_month != null ? String(initial.due_month) : String(todayMonth),
+  const [startYm, setStartYm] = useState(
+    startPeriod ?? `${todayYear}-${String(initial?.due_month ?? todayMonth).padStart(2, "0")}`,
   );
   const [notes, setNotes] = useState(initial?.notes ?? "");
   const [endPeriod, setEndPeriod] = useState(initial?.end_period ?? "");
@@ -97,14 +97,12 @@ export default function BillTemplateForm({ initial, startPeriod, isDraft, paidDa
 
   const isRecurring = RECURRING_FREQUENCIES.includes(frequency);
 
-  // Recurring bills anchor to the current year + chosen month on create (mirrors the backend).
   const currentPeriod = todayStr.slice(0, 7);
-  const effectiveStart =
-    (isDraft ? null : startPeriod) ?? `${todayYear}-${String(parseInt(dueMonth, 10) || todayMonth).padStart(2, "0")}`;
+  const effectiveStart = startYm;
   const minEnd = effectiveStart > currentPeriod ? effectiveStart : currentPeriod;
   // The server keeps an existing monthly bill's start (it anchors the cycle and its history)
   const startLocked = !!startPeriod && frequency === "monthly" && !isDraft;
-  const startMonth = startLocked ? Number(startPeriod.slice(5, 7)) : parseInt(dueMonth, 10) || todayMonth;
+  const startMonth = Number(startYm.slice(5, 7));
   const maxInterval = frequency === "annual" ? 5 : 12;
   const effectiveInterval = frequency === "one_off" ? 1 : Math.min(interval, maxInterval);
   const step = effectiveInterval * (frequency === "annual" ? 12 : 1);
@@ -167,7 +165,7 @@ export default function BillTemplateForm({ initial, startPeriod, isDraft, paidDa
         currency: currency || "EUR",
         ...(frequency === "one_off"
           ? { dates, due_day: null, due_days: null, due_month: null }
-          : { due_days: dueDays, due_day: dueDays[0], due_month: startMonth }),
+          : { due_days: dueDays, due_day: dueDays[0], due_month: startMonth, start_period: startYm }),
         end_period: isRecurring ? endPeriod || null : null,
         notes: notes.trim() || null,
       };
@@ -309,10 +307,10 @@ export default function BillTemplateForm({ initial, startPeriod, isDraft, paidDa
                     </label>
                     <MonthYearPicker
                       id="bill-start-month"
-                      value={`${effectiveStart.slice(0, 4)}-${String(startMonth).padStart(2, "0")}`}
+                      value={startYm}
                       clearable={false}
                       disabled={startLocked}
-                      onChange={(ym) => ym && setDueMonth(String(Number(ym.slice(5, 7))))}
+                      onChange={(ym) => ym && setStartYm(ym)}
                     />
                     {startLocked && (
                       <p className="mt-1.5 text-xs text-slate-500 dark:text-slate-400">{t("startLocked")}</p>

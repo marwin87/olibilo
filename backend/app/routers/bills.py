@@ -234,7 +234,9 @@ def create_bill(
     _check_category_ownership(db, body.category_id, me.id)
 
     now = now_for(me)
-    if body.due_month and body.frequency == BF.annual:
+    if body.start_period and body.frequency in (BF.monthly, BF.annual):
+        start_period = body.start_period
+    elif body.due_month and body.frequency == BF.annual:
         year = now.year if body.due_month >= now.month else now.year + 1
         start_period = f"{year:04d}-{body.due_month:02d}"
     elif body.due_month and body.frequency in (*RECURRING, BF.one_off):
@@ -248,7 +250,7 @@ def create_bill(
         raise HTTPException(status_code=422, detail="end_period is before start")
     if body.dates:
         start_period = body.dates[0].strftime("%Y-%m")
-    data = body.model_dump(exclude={"due_month", "dates", "due_days"})
+    data = body.model_dump(exclude={"due_month", "start_period", "dates", "due_days"})
     data.update(_day_columns(body.due_days))
     if body.dates:
         data["due_day"] = None
@@ -552,6 +554,7 @@ def update_bill(
     updates = body.model_dump(exclude_unset=True)
     updates.pop("recreate_deleted_future", None)
     due_month = updates.pop("due_month", None)
+    new_start = updates.pop("start_period", None)
     dates = updates.pop("dates", None)
     if "due_days" in updates:
         updates.update(_day_columns(updates["due_days"]))
@@ -570,7 +573,9 @@ def update_bill(
 
     if bill.status == BillStatus.draft:
         # Draft: no payments exist, so only the stored template changes.
-        if due_month is not None and not dates:
+        if new_start and bill.frequency in (BF.monthly, BF.annual):
+            bill.start_period = new_start
+        elif due_month is not None and not dates:
             now = now_for(me)
             if bill.frequency == BF.annual and due_month < now.month:
                 year = now.year + 1
@@ -597,7 +602,9 @@ def update_bill(
 
     # Recalculate start_period when due_month changes for annual/one_off
     effective_frequency = updates.get("frequency", bill.frequency)
-    if (
+    if new_start and effective_frequency == BF.annual:
+        bill.start_period = new_start
+    elif (
         due_month is not None
         and effective_frequency in (BF.annual, BF.one_off)
         and not dates

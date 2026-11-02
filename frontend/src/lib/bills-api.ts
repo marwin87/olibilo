@@ -40,6 +40,8 @@ export interface BillTemplateCreate {
   /** One-off only: every payment date (YYYY-MM-DD), any months. */
   dates?: string[] | null;
   due_month?: number | null;
+  /** Recurring only: first month (YYYY-MM); wins over due_month. */
+  start_period?: string | null;
   end_period?: string | null;
   notes?: string | null;
 }
