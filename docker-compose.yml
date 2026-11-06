@@ -1,3 +1,5 @@
+name: olibilo
+
 services:
   backend:
     image: olibilo-backend:latest

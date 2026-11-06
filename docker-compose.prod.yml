@@ -1,3 +1,5 @@
+name: olibilo
+
 services:
   backend:
     image: ghcr.io/marwin87/olibilo-backend:${OLIBILO_VERSION:-latest}
